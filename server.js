@@ -7,22 +7,17 @@ var React = require("react"),
 
 var router = new Router();
 
-var PLACEHOLDER = 'If you see this then something is wrong.';
-var Bundle = fs.readFileSync('./browser-bundle.js', {encoding: 'utf8'});
+var MARKUP = 'markup';
 var TEMPLATE = fs.readFileSync('./index.html', {encoding: 'utf8'});
 
 
 router.get('/', function (request, response) {
-    response.end(TEMPLATE.replace(PLACEHOLDER, React.renderComponentToString(App())));
+    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToStaticMarkup(App())));
 });
 
 router.get('/user/:userId', function (request, response) {
     var userId = request.params.userId;
-    response.end(TEMPLATE.replace(PLACEHOLDER, React.renderComponentToString(User({userId: userId }))));
-});
-
-router.get('/browser-bundle.js', function (request, response) {
-    response.end(Bundle);
+    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToStaticMarkup(User({userId: userId }))));
 });
 
 var server = http.createServer(router);
