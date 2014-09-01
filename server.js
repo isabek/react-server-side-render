@@ -12,12 +12,12 @@ var TEMPLATE = fs.readFileSync('./index.html', {encoding: 'utf8'});
 
 
 router.get('/', function (request, response) {
-    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToStaticMarkup(App())));
+    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToString(App())));
 });
 
 router.get('/user/:userId', function (request, response) {
     var userId = request.params.userId;
-    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToStaticMarkup(User({userId: userId }))));
+    response.end(TEMPLATE.replace(MARKUP, React.renderComponentToString(User({userId: userId }))));
 });
 
 var server = http.createServer(router);
